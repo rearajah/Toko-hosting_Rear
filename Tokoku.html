@@ -167,19 +167,17 @@
 
     function kirimPesan() {
       const nama = document.getElementById('nama').value.trim();
-      const email = document.getElementById('email').value.trim();
       const waUser = document.getElementById('wa').value.trim();
       const catatan = document.getElementById('catatan').value.trim();
       const layanan = document.getElementById('jenisLayanan').selectedOptions[0].text;
 
-      if (!nama || !email || !waUser || totalHarga === 0) {
+      if (!nama || !waUser || totalHarga === 0) {
         alert("Lengkapi semua data dan hitung harga terlebih dahulu.");
         return;
       }
 
       const pesan = `Halo Rear OfficiaL, saya ingin memesan layanan:%0A
 - Nama: ${nama}%0A
-- Email: ${email}%0A
 - WhatsApp: ${waUser}%0A
 - Layanan: ${layanan}%0A
 - Total Harga: ${formatRupiah(totalHarga)}%0A
