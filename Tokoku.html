@@ -30,15 +30,19 @@
   <!-- Navbar -->
   <nav class="bg-gradient-to-r from-primary to-semi-purple text-white p-4 shadow-lg">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <h1 class="text-xl font-bold">Rear OfficiaL</h1>
+      <div class="flex items-center space-x-4">
+        <img src="https://img1.pixhost.to/images/9510/652504583_rulzz-official.jpg" alt="Logo Rear OfficiaL" class="w-8 h-8 rounded-full" />
+        <h1 class="text-xl font-bold">Rear OfficiaL</h1>
+      </div>
       <ul class="flex space-x-6">
         <li><a href="#about" class="hover:text-purple-200 transition">About</a></li>
-        <li><a href="/produk.html" class="hover:text-purple-200 transition">Produk</a></li>
-        <li><a href="#harga" class="hover:text-purple-200 transition">Harga & Pemesanan</a></li>
+        <li><a href="#produk" class="hover:text-purple-200 transition">Produk</a></li>
+        <li><a href="#harga" class="hover:text-purple-200 transition">Pesan</a></li>
+        <li><a href="#pembayaran" class="hover:text-purple-200 transition">Pembayaran</a></li>
         <li><a href="#kontak" class="hover:text-purple-200 transition">Kontak</a></li>
       </ul>
       <button @click="darkMode = !darkMode" class="bg-white text-primary px-3 py-1 rounded hover:bg-purple-100 text-sm dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600" aria-label="Toggle dark mode">
-        Toggle Tema
+        <span x-text="darkMode ? 'Mode Terang' : 'Mode Gelap'"></span>
       </button>
     </div>
   </nav>
@@ -168,7 +172,7 @@
   </section>
 
   <!-- Metode Pembayaran -->
-  <section class="py-10 bg-gradient-to-br from-purple-50 to-white dark:bg-gradient-to-br dark:from-primary-dark dark:to-primary border-t border-purple-200 dark:border-purple-700">
+  <section id="pembayaran" class="py-10 bg-gradient-to-br from-purple-50 to-white dark:bg-gradient-to-br dark:from-primary-dark dark:to-primary border-t border-purple-200 dark:border-purple-700">
     <div class="max-w-xl mx-auto px-4 space-y-6">
       <h2 class="text-xl font-semibold text-primary dark:text-semi-purple text-center">Metode Pembayaran</h2>
 
@@ -224,10 +228,3 @@
       </div>
     </div>
   </section>
-
-  <!-- Footer -->
-  <footer class="bg-gradient-to-r from-primary to-semi-purple text-center py-4 text-white">
-    <p>&copy; 2025 Rear OfficiaL. Solusi Hosting Terbaik Masa Kini.</p>
-  </footer>
-</body>
-</html>
