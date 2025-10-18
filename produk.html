@@ -1,0 +1,79 @@
+<!-- Produk Section (Gabungan Produk, Kalkulator Harga, dan Form Pemesanan) -->
+<section id="produk" class="py-10 bg-white dark:bg-primary-light">
+  <div class="max-w-4xl mx-auto px-4">
+    <h2 class="text-2xl font-semibold text-primary mb-4 dark:text-semi-purple">Produk Rear OfficiaL</h2>
+    <p class="text-gray-700 dark:text-gray-300 mb-4">
+      Menyediakan vps yang memiliki performa tinggi, aktif 1 bulan dan bisa di perpanjang.
+    </p>
+    <p class="text-gray-700 dark:text-gray-300 mb-4">
+      Dengan akun cloud anda bisa membuat dan menjual vps. Silakan cek harga dengan tekan tombol di bawah.
+    </p>
+
+    <!-- Kalkulator Harga -->
+    <h3 class="text-xl font-semibold text-primary mb-4 dark:text-semi-purple">Kalkulator Harga</h3>
+    <label for="layanan-select" class="block mb-1">Pilih layanan:</label>
+    <select id="layanan-select" x-model="layanan" @change="hari = 0; gb = 0" class="w-full p-2 border border-purple-300 rounded mb-4 dark:bg-primary-light dark:border-purple-600 dark:text-white focus:ring-2 focus:ring-semi-purple" aria-label="Pilih layanan">
+      <option value="pt">PT Panel - Rp25.000 (selamanya)</option>
+      <option value="admin">Admin Panel - Rp15.000 (selamanya)</option>
+      <option value="reseller">Reseller Panel - Rp7.000 (selamanya)</option>
+      <option value="wa">Bot WhatsApp - Rp1.000/hari</option>
+      <option value="ptero">Panel Pterodactyl - Rp1.000/GB</option>
+    </select>
+
+    <!-- Input Hari -->
+    <div x-show="layanan === 'wa'" x-transition class="mb-4">
+      <label for="hari-input" class="block mb-1">Jumlah Hari:</label>
+      <input id="hari-input" type="number" x-model.number="hari" min="1" class="w-full p-2 border border-purple-300 rounded dark:bg-primary-light dark:border-purple-600 dark:text-white focus:ring-2 focus:ring-semi-purple" aria-label="Jumlah hari" />
+    </div>
+
+    <!-- Input GB -->
+    <div x-show="layanan === 'ptero'" x-transition class="mb-4">
+      <label for="gb-input" class="block mb-1">Jumlah GB RAM:</label>
+      <input id="gb-input" type="number" x-model.number="gb" min="1" class="w-full p-2 border border-purple-300 rounded dark:bg-primary-light dark:border-purple-600 dark:text-white focus:ring-2 focus:ring-semi-purple" aria-label="Jumlah GB RAM" />
+    </div>
+
+    <template x-if="layanan === 'pt' || layanan === 'admin' || layanan === 'reseller' || (layanan === 'wa' && hari >= 1) || (layanan === 'ptero' && gb >= 1)">
+      <p class="mt-4 font-semibold text-primary dark:text-semi-purple" aria-live="polite">
+        Total:
+        <span x-text="layanan === 'pt' ? 'Rp25.000' :
+                       layanan === 'admin' ? 'Rp15.000' :
+                       layanan === 'reseller' ? 'Rp7.000' :
+                       layanan === 'wa' ? 'Rp' + (hari * 1000).toLocaleString('id-ID') :
+                       'Rp' + (gb * 1000).toLocaleString('id-ID')">
+        </span>
+      </p>
+    </template>
+
+    <!-- Form Pemesanan -->
+    <h3 class="text-xl font-semibold text-primary mb-4 dark:text-semi-purple mt-8">Form Pemesanan</h3>
+    <div x-data="{ nama: '', wa: '', catatan: '' }">
+      <input id="nama-input" x-model="nama" type="text" placeholder="Username" required class="w-full p-2 border border-purple-300 rounded mb-3 dark:bg-primary-light dark:border-purple-600 dark:text-white focus:ring-2 focus:ring-semi-purple" aria-label="Username" />
+      <input id="wa-input" x-model="wa" type="tel" placeholder="Nomor WhatsApp Anda" required class="w-full p-2 border border-purple-300 rounded mb-3 dark:bg-primary-light dark:border-purple-600 dark:text-white focus:ring-2 focus:ring-semi-purple" aria-label="Nomor WhatsApp" />
+      <textarea id="catatan-textarea" x-model="catatan" placeholder="Catatan tambahan (opsional)" class="w-full p-2 border border-purple-300 rounded mb-4 dark:bg-primary-light dark:border-purple-600 dark:text-white focus:ring-2 focus:ring-semi-purple" aria-label="Catatan tambahan"></textarea>
+
+      <button @click="
+        if (!nama.trim() || !wa.trim() || (layanan === 'wa' && hari < 1) || (layanan === 'ptero' && gb < 1)) {
+          alert('Lengkapi semua data wajib dan pastikan jumlah valid.');
+        } else {
+          isSubmitting = true;
+          const total = layanan === 'pt' ? 25000 :
+                        layanan === 'admin' ? 15000 :
+                        layanan === 'reseller' ? 7000 :
+                        layanan === 'wa' ? hari * 1000 :
+                        gb * 1000;
+
+          const text = `Halo Rear OfficiaL, saya ingin memesan layanan:%0A- Nama: ${nama}%0A- WhatsApp: ${wa}%0A- Layanan: ${layanan}%0A- Total Harga: Rp${total.toLocaleString('id-ID')}%0A- Catatan: ${catatan || '-'}%0A`;
+          setTimeout(() => {
+            window.open(`https://wa.me/6283839976528?text=${text}`, '_blank');
+            isSubmitting = false;
+          }, 500);
+        }"
+        :disabled="isSubmitting"
+        class="w-full bg-gradient-to-r from-semi-purple to-primary text-white py-2 rounded hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition"
+        aria-label="Kirim pesanan via WhatsApp">
+        <span x-show="!isSubmitting">Tekan Untuk Pesan Produk!</span>
+        <span x-show="isSubmitting" x-cloak>Mengirim...</span>
+      </button>
+    </div>
+  </div>
+</section>
